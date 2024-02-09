@@ -2,7 +2,7 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const files = require('./src/file');
-const debugTools = require('./src/debugTools')
+// const debugTools = require('./src/debugTools')
 
 const startedAt = Date.now()
 let lastActivityTimeStamp;
@@ -58,9 +58,12 @@ function activate(context) {
 	startTimer();
 	onChangeDocumentText();
 	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(onChangeDocumentText));
+	// 
+	// let panel = vscode.window.createWebviewPanel('catCoding', 'title', vscode.ViewColumn.One, {})
+	// panel.webview.html = "<h1>aaaaa</h1>"
+	// panel.reveal()
+	// 
 }
-
-
 async function saveData() {
 	const endedAt = Date.now()
 	const dataFileExists = await fs.existsSync(extensionDataPath);
@@ -85,7 +88,6 @@ async function saveData() {
 		extensionData[workspacePath] = tempData
 	}
 	files.ensureDirectoryExists(files.findExtensionDataPath());
-
 	let a = await fs.writeFile(extensionDataPath, JSON.stringify(extensionData), (err) => {
 		if (err) {
 			console.error(err);
